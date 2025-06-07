@@ -11,6 +11,6 @@ body {
   justify-content: center;
   gap: 10px;
 }
-#result {
-  flex-wrap: wrap;
+input {
+  transition: border 0.5 ease;
 }

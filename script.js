@@ -4,14 +4,15 @@ const equals = document.getElementById("equals");
 
 
 function calc(operation, a, b) {
-  if (typeof a !== "number" || typeof b !== "number") {
+
+
+  if (typeof a !== "number" || typeof b !== "number" || Number.isNaN(a) || Number.isNaN(b)) {
     return "ошибка ввода: не передан операнд или цифра.";
   }
 
-  if (Number.isNaN(a) || Number.isNaN(b)) {
-    return "Легчайшая для величайшего";
-  }
 
+
+ 
   switch (operation) {
     case "add":
       return Number((a + b).toFixed(2));
@@ -32,13 +33,35 @@ function calc(operation, a, b) {
 
 
 equals.addEventListener("click", () => {
-const a = Number(document.getElementById("input1").value)
-const b = Number(document.getElementById("input2").value)
+
+const a = document.getElementById("input1").value
+const b = document.getElementById("input2").value
 const operation = document.getElementById("operation").value
 const result = document.getElementById("result")
 
-document.getElementById("result").innerHTML = `
-    Результат: ${result.textContent = (calc(operation, a, b))}
-    <img src="5f5e600d53beb17488a7341f.png" alt="иконка" style="margin-left: 10px; vertical-align: middle; width:200px;">
-  `;
+if (a.trim() === "" || b.trim() === "") {
+  result.textContent = "Ошибка: одно из полей пустое.";
+  const input1 = document.getElementById("input1")
+  const input2 = document.getElementById("input2")
+  input1.style.transition = "border 0.5s ease"; // отдельно transition
+input2.style.transition = "border 0.5s ease";
+input1.style.border = "1px solid red";        // отдельно border
+input2.style.border = "1px solid red";
+
+   setTimeout(() => {
+    if (a.trim() === "") input1.style.border = "";
+    if (b.trim() === "") input2.style.border = "";
+  }, 3000);
+ 
+  return;
+  
+}
+
+
+
+const resultA = Number(a.trim().replaceAll(",", "."))
+const resultB = Number(b.trim().replaceAll(",", "."))
+
+
+result.textContent = (`Результат: ${calc(operation, resultA, resultB)}`)
 });
